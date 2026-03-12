@@ -1,0 +1,437 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Apsara - Shop</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+
+<style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:Poppins,sans-serif;
+}
+
+body{
+background:#fafafa;
+color:#333;
+}
+
+header{
+background:#ff5c8a;
+color:white;
+padding:20px;
+text-align:center;
+}
+
+header h1{
+font-size:26px;
+}
+
+header p{
+font-size:14px;
+opacity:.9;
+}
+
+.container{
+padding:15px;
+max-width:900px;
+margin:auto;
+}
+
+.filters{
+display:flex;
+gap:10px;
+margin-bottom:15px;
+}
+
+.filters button{
+padding:8px 14px;
+border:none;
+border-radius:20px;
+background:#eee;
+cursor:pointer;
+}
+
+.filters button.active{
+background:#ff5c8a;
+color:white;
+}
+
+.products{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(160px,1fr));
+gap:15px;
+}
+
+.product{
+background:white;
+border-radius:10px;
+padding:10px;
+box-shadow:0 3px 10px rgba(0,0,0,.08);
+text-align:center;
+}
+
+.product img{
+width:100%;
+height:140px;
+object-fit:cover;
+border-radius:8px;
+}
+
+.product h3{
+font-size:15px;
+margin:8px 0;
+}
+
+.price{
+color:#ff5c8a;
+font-weight:600;
+}
+
+.product button{
+margin-top:6px;
+background:#ff5c8a;
+border:none;
+color:white;
+padding:8px 10px;
+border-radius:6px;
+cursor:pointer;
+font-size:13px;
+}
+
+.cart-icon{
+position:fixed;
+bottom:20px;
+right:20px;
+background:#ff5c8a;
+color:white;
+width:55px;
+height:55px;
+border-radius:50%;
+display:flex;
+align-items:center;
+justify-content:center;
+font-size:22px;
+cursor:pointer;
+box-shadow:0 5px 15px rgba(0,0,0,.2);
+}
+
+.cart-count{
+position:absolute;
+top:-5px;
+right:-5px;
+background:#000;
+color:white;
+font-size:12px;
+padding:2px 6px;
+border-radius:50%;
+}
+
+.cart-modal{
+position:fixed;
+top:0;
+left:0;
+width:100%;
+height:100%;
+background:rgba(0,0,0,.5);
+display:none;
+align-items:center;
+justify-content:center;
+}
+
+.cart-content{
+background:white;
+width:95%;
+max-width:450px;
+border-radius:10px;
+padding:20px;
+max-height:90vh;
+overflow:auto;
+}
+
+.cart-item{
+display:flex;
+justify-content:space-between;
+margin-bottom:10px;
+font-size:14px;
+}
+
+.qty button{
+padding:2px 6px;
+margin:0 4px;
+}
+
+.total{
+margin-top:10px;
+font-weight:600;
+}
+
+.checkout-btn{
+margin-top:10px;
+background:#ff5c8a;
+border:none;
+color:white;
+padding:10px;
+width:100%;
+border-radius:6px;
+cursor:pointer;
+}
+
+form{
+margin-top:15px;
+display:none;
+}
+
+form input,form textarea{
+width:100%;
+margin-bottom:10px;
+padding:8px;
+border:1px solid #ddd;
+border-radius:6px;
+}
+
+.success{
+display:none;
+text-align:center;
+padding:20px;
+}
+
+.whatsapp{
+position:fixed;
+left:20px;
+bottom:20px;
+background:#25D366;
+color:white;
+padding:12px 16px;
+border-radius:30px;
+text-decoration:none;
+font-size:14px;
+box-shadow:0 5px 15px rgba(0,0,0,.2);
+}
+
+</style>
+</head>
+
+<body>
+
+<header>
+<h1>Apsara - Shop</h1>
+<p>Be Your Own Favourite</p>
+</header>
+
+<div class="container">
+
+<div class="filters">
+<button class="active">Hair Clips</button>
+</div>
+
+<div class="products">
+
+<div class="product">
+<img src="https://i.ibb.co/fgtshQk/original-imahfvf5syskznes.webp">
+<h3>Hair Clip Style 1</h3>
+<div class="price">₹100</div>
+<button onclick="addToCart('Hair Clip Style 1',100)">Add to Cart</button>
+</div>
+
+<div class="product">
+<img src="https://i.ibb.co/T686Wvm/download-1.jpg">
+<h3>Hair Clip Style 2</h3>
+<div class="price">₹170</div>
+<button onclick="addToCart('Hair Clip Style 2',170)">Add to Cart</button>
+</div>
+
+<div class="product">
+<img src="https://i.ibb.co/XZHWqBXV/party.webp">
+<h3>Party Hair Clip</h3>
+<div class="price">₹135</div>
+<button onclick="addToCart('Party Hair Clip',135)">Add to Cart</button>
+</div>
+
+<div class="product">
+<img src="https://i.ibb.co/dT3vwZT/90.jpg">
+<h3>Hair Clip Classic</h3>
+<div class="price">₹135</div>
+<button onclick="addToCart('Hair Clip Classic',135)">Add to Cart</button>
+</div>
+
+</div>
+</div>
+
+<div class="cart-icon" onclick="toggleCart()">
+🛒
+<span class="cart-count" id="cartCount">0</span>
+</div>
+
+<div class="cart-modal" id="cartModal">
+
+<div class="cart-content">
+
+<h3>Your Cart</h3>
+
+<div id="cartItems"></div>
+
+<div class="total" id="total"></div>
+
+<button class="checkout-btn" onclick="showCheckout()">Place Order</button>
+
+<form id="https://formspree.io/f/xbdzoeov" method="POST">
+
+<input type="text" name="name" placeholder="Customer Name" required>
+
+<input type="tel" name="phone" placeholder="Phone Number" required>
+
+<textarea name="address" placeholder="Delivery Address" required></textarea>
+
+<textarea name="instructions" placeholder="Special Instructions"></textarea>
+
+<input type="hidden" name="order_summary" id="orderSummary">
+
+<button class="checkout-btn" type="submit">Submit Order</button>
+
+</form>
+
+<div class="success" id="successMsg">
+
+<h3>Order placed!</h3>
+<p>Apsara will contact you on WhatsApp to confirm.</p>
+
+<a href="https://wa.me/9991320511">Message on WhatsApp</a>
+
+</div>
+
+</div>
+</div>
+
+<a class="whatsapp" href="https://wa.me/9991320511">Chat on WhatsApp</a>
+
+<script>
+
+let cart=JSON.parse(localStorage.getItem("cart"))||[]
+
+function saveCart(){
+localStorage.setItem("cart",JSON.stringify(cart))
+updateCart()
+}
+
+function addToCart(name,price){
+
+let item=cart.find(i=>i.name===name)
+
+if(item){
+item.qty++
+}else{
+cart.push({name,price,qty:1})
+}
+
+saveCart()
+
+}
+
+function updateCart(){
+
+let cartItems=document.getElementById("cartItems")
+
+cartItems.innerHTML=""
+
+let total=0
+
+cart.forEach((item,index)=>{
+
+let subtotal=item.price*item.qty
+total+=subtotal
+
+cartItems.innerHTML+=`
+
+<div class="cart-item">
+
+<div>
+${item.name}<br>
+₹${item.price}
+</div>
+
+<div class="qty">
+
+<button onclick="changeQty(${index},-1)">-</button>
+${item.qty}
+<button onclick="changeQty(${index},1)">+</button>
+
+<button onclick="removeItem(${index})">x</button>
+
+</div>
+
+</div>
+
+`
+
+})
+
+document.getElementById("total").innerText="Total: ₹"+total
+
+document.getElementById("cartCount").innerText=cart.reduce((a,b)=>a+b.qty,0)
+
+let summary=""
+
+cart.forEach(i=>{
+summary+=`${i.name} x${i.qty} = ₹${i.price*i.qty}\n`
+})
+
+summary+="\nTotal: ₹"+total
+
+document.getElementById("orderSummary").value=summary
+
+}
+
+function changeQty(index,change){
+
+cart[index].qty+=change
+
+if(cart[index].qty<=0) cart.splice(index,1)
+
+saveCart()
+
+}
+
+function removeItem(index){
+
+cart.splice(index,1)
+
+saveCart()
+
+}
+
+function toggleCart(){
+
+document.getElementById("cartModal").style.display="flex"
+
+}
+
+function showCheckout(){
+
+document.getElementById("orderForm").style.display="block"
+
+}
+
+document.getElementById("orderForm").addEventListener("submit",function(){
+
+localStorage.removeItem("cart")
+cart=[]
+updateCart()
+
+document.getElementById("orderForm").style.display="none"
+document.getElementById("successMsg").style.display="block"
+
+})
+
+updateCart()
+
+</script>
+
+</body>
+</html>
